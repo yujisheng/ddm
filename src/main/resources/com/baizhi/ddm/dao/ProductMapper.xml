@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.baizhi.ddm.dao.ProductDao">
+    <resultMap id="productMap" type="Product">
+        <result column="book_id" property="book_id"/>
+        <result column="cid" property="cid"/>
+        <result column="book_name" property="book_name"/>
+        <result column="book_price" property="book_price"/>
+        <result column="groundingDate" property="groundingDate"/>
+        <result column="book_state" property="book_state"/>
+        <result column="inventory" property="inventory"/>
+        <result column="author" property="author"/>
+        <result column="press" property="press"/>
+        <result column="editNum" property="editNum"/>
+        <result column="print_date" property="print_date"/>
+        <result column="print_count" property="print_count"/>
+        <result column="isbn" property="isbn"/>
+        <result column="word_count" property="word_count"/>
+        <result column="page_count" property="page_count"/>
+        <result column="style" property="style"/>
+        <result column="page" property="page"/>
+        <result column="pack" property="pack"/>
+        <result column="salenum" property="salenum"/>
+        <result column="custome_score" property="custome_score"/>
+        <result column="recommend" property="recommend"/>
+        <result column="messages" property="messages"/>
+        <result column="author_msg" property="author_msg"/>
+        <result column="list" property="list"/>
+        <result column="media_comment" property="media_comment"/>
+        <result column="imagePath" property="imagePath"/>
+        <result column="series_name" property="series_name"/>
+        <result column="Dangprice" property="dangprice"/>
+        <result column="product_image" property="product_image"/>
+        <association property="category" javaType="Category">
+            <result column="category_id" property="category_id"/>
+            <result column="category_name" property="category_name"/>
+        </association>
+    </resultMap>
+    <select id="getAllProduct" resultMap="productMap">
+        select ddp.*,ddc.category_name from dd_product ddp LEFT JOIN dd_category ddc
+        on ddp.cid = ddc.category_id LIMIT #{start},#{end}
+    </select>
+
+    <select id="getOneProduct" resultType="Product">
+        select * from dd_product where book_id=#{bookId}
+    </select>
+
+    <select id="getCount" resultType="int">
+        SELECT COUNT(*) from dd_product
+    </select>
+
+    <insert id="addProduct">
+        insert into dd_product(cid,book_name,book_price,groundingDate,inventory,author,press,editNum,salenum,custome_score,recommend,messages,Dangprice,product_image) values(#{cid},#{book_name},#{book_price},#{groundingDate}inventory,#{author},#{press},#{editNum},#{salenum},#{custome_score},#{recommend},#{messages},#{dangprice},#{product_image})
+    </insert>
+
+    <delete id="deleteMutliProduct">
+        delete from dd_product where book_id in
+        <foreach collection="array" open="(" close=")" separator="," item="bookId">#{bookId}</foreach>
+    </delete>
+
+    <update id="updateProduct">
+        update dd_product set
+            cid=#{cid},
+            book_name=#{book_name},
+            book_price=#{book_price},
+            inventory=#{inventory},
+            author=#{author},
+            press=#{press},
+            editNum=#{editnum},
+            salenum=#{salenum},
+            custome_score=#{custome_score},
+            recommend=#{recommend},
+            messages=#{messages},
+            author_msg=#{author_msg},
+            media_comment=#{media_comment},
+            Dangprice=#{dangprice},
+            product_image=#{product_image}
+            where book_id=#{book_id}
+    </update>
+
+</mapper>
+
