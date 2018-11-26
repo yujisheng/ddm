@@ -43,7 +43,10 @@ public class ProductController {
     @ResponseBody
     public boolean addProduct(Product product, MultipartFile uploadFile, HttpSession session) {
 
+        System.out.println("product==>" + product);
+
         String fileName = uploadFile.getOriginalFilename();
+        System.out.println("fileName==>" + fileName);
 
         fileName = new Date().getTime() + fileName;
 
@@ -72,7 +75,7 @@ public class ProductController {
     public boolean updateProduct(Product product, MultipartFile uploadFile, HttpSession session) {
 
         System.out.println("===================");
-
+        System.out.println("product==>" + product);
         String fileName = uploadFile.getOriginalFilename();
         if (!"".equals(fileName)) {
             fileName = new Date().getTime() + fileName;

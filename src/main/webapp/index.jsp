@@ -25,18 +25,18 @@
 
 
         // 通过easyUI的form控件和ajax进行登录
-        /*function form_login(){
-            alert(0);
+        function form_submit() {
+            //alert(0);
             // 通过form控件，以ajax的方式提交表单
-            $("#form_easyUI").form("submit",{
+            $("#login").form("submit", {
                 // 当submit的返回值为false时，阻止表单提交
-                url:"/admin/login",
+                url: "/ddm/admin/login",
                 // 通过validate方法，获取所有验证框的验证结果，但所有验证头通过时，返回true，否则返回false，
-                /!*onSubmit:function(){
+                /*onSubmit:function(){
                     var isOk = $(this).form("validate");
                     alert(isOk);
                     return isOk;
-                },*!/
+                },*/
                 // 回调函数，后台响应结果data是json串
                 success:function(data){
 
@@ -45,26 +45,40 @@
                     //alert(data);
                     //alert(data.isLogin);
                     if(data.isLogin){
-                        location="/mian/main.jsp";
+                        location = "${pageContext.request.contextPath}/main/main.jsp";
                     }else{
                         $.messager.show({
                             title:'提示信息',
                             msg:'登录失败',
-                            timeout:5000,
+                            timeout: 3000,
                             showType:'slide'
                         });
 
                     }
                 }
             });
-        }*/
+        }
         // 通过easyUI的form控件和ajax提交表单，进行登录======END
+        $(function () {
+            var login = $("#login123").val();
+            //alert(login);
+            if (login == 1) {
+                $.messager.show({
+                    title: '提示信息',
+                    msg: '登录失败!',
+                    timeout: 3000,
+                    showType: 'slide'
+                });
+            }
+        });
     </script>
 </head>
 <body>
+<div><input type="hidden" value="${param.login}" id="login123"/></div>
 <div id="top"></div>
 
-<form id="login" name="login" method="post" action="${pageContext.request.contextPath}/admin/login">
+<%--<form id="login" name="login" method="post" action="${pageContext.request.contextPath}/admin/login">--%>
+<form id="login" name="login" method="post">
     <div id="center">
         <div id="center_left"></div>
         <div id="center_middle">

@@ -80,6 +80,7 @@
                 resizable: true,
                 closed: true,
                 maximizable: true,
+                modal: true,
                 //closable:true
             });
             // 添加对话框=========END
@@ -110,7 +111,7 @@
         // 打开添加对话框=====END
 
         function pro1() {
-            //alert(0);
+            alert(0);
             // 添加表单提交
             $("#prof1").form("submit", {
                 // 通过form控件的submit方法提交数据
@@ -158,6 +159,7 @@
                 //resizable:true,
                 closed: true,
                 maximizable: true,
+                modal: true,
                 //closable:true //定义是否显示关闭按钮
             });
             // 修改对话框=========END
@@ -205,6 +207,30 @@
                 $("#messages").val(selectRow[0].messages);
                 $("#image").html("<img src='${pageContext.request.contextPath}/productImages/" + selectRow[0].product_image + "' width='50px' height='70px'>");
                 $("#updateProdia").dialog("open");
+
+                // 文件上传(文件域)的改变事件
+                $(':file').change(function (event) {
+                    //  HTML5 js 对象的获取
+                    var files = event.target.files, file;
+                    if (files && files.length > 0) {
+                        // 获取目前上传的文件
+                        file = files[0];
+                        // 文件的限定类型什么的道理是一样的
+                        if (file.size > 1024 * 1024 * 2) {
+                            alert('图片大小不能超过 2MB!');
+                            return false;
+                        }
+                        // file对象生成可用的图片
+                        var URL = window.URL || window.webkitURL;
+                        // 通过 file 生成目标 url
+                        var imgURL = URL.createObjectURL(file);
+                        // 用这个 URL 产生一个 <img> 将其显示出来
+                        //$("img").prop('src', imgURL);
+                        $("#image").html("<img src='" + imgURL + "'width='50px' height='70px'>");
+                    }
+                });
+
+
             } else {
                 if (selectRow.length == 0) {
                     $.messager.alert("提示消息", "请选择修改数据！", "info");
@@ -233,7 +259,6 @@
                 }
             });
         }
-
         // 修改提交表单=======END
         // ================修改==========END====================
 
@@ -362,7 +387,7 @@
                     <input id="proId" name="book_id" type="hidden"/>
                     图书名字：<input class="easyui-validatebox" id="proName" name="book_name"
                                 data-options="required:true,missingMessage:'请填写商品名字'"/><br/><br/>
-                    图书封面：<input class="easyui-filebox" name="uploadFile"
+                    图书封面：<input class="easyui-filebox" name="uploadFile" id="update_filebox"
                                 data-options="required:true,missingMessage:'请选择封面'"/><br/><br/>
                 </td>
                 <td>

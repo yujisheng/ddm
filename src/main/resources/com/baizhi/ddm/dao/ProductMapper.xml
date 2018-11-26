@@ -50,7 +50,7 @@
     </select>
 
     <insert id="addProduct">
-        insert into dd_product(cid,book_name,book_price,groundingDate,inventory,author,press,editNum,salenum,custome_score,recommend,messages,Dangprice,product_image) values(#{cid},#{book_name},#{book_price},#{groundingDate}inventory,#{author},#{press},#{editNum},#{salenum},#{custome_score},#{recommend},#{messages},#{dangprice},#{product_image})
+        insert into dd_product(cid,book_name,book_price,groundingDate,inventory,author,press,salenum,custome_score,recommend,messages,Dangprice,product_image) values(#{cid},#{book_name},#{book_price},#{groundingDate},#{inventory},#{author},#{press},#{salenum},#{custome_score},#{recommend},#{messages},#{dangprice},#{product_image})
     </insert>
 
     <delete id="deleteMutliProduct">
@@ -66,14 +66,11 @@
             inventory=#{inventory},
             author=#{author},
             press=#{press},
-            editNum=#{editnum},
             salenum=#{salenum},
             custome_score=#{custome_score},
             recommend=#{recommend},
             messages=#{messages},
-            author_msg=#{author_msg},
-            media_comment=#{media_comment},
-            Dangprice=#{dangprice},
+            dangprice=#{dangprice},
             product_image=#{product_image}
             where book_id=#{book_id}
     </update>
